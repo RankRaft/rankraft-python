@@ -25,8 +25,8 @@ class SitesResource:
     def get(self, *, site_id: str) -> Site:
         """One site.
 
-        A site id belonging to another organization returns 404, never 403 —
-        the API refuses to confirm that an id exists. ``NotFoundError`` here
+        A site id belonging to another organization returns 404, never 403
+        - the API refuses to confirm that an id exists. ``NotFoundError`` here
         means "no such site in this organization", not "no such site".
         """
         return self._client._call("get_site", path_params={"site_id": site_id}).data  # type: ignore[no-any-return]

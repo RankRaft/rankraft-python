@@ -1,6 +1,6 @@
 """The report endpoints.
 
-POST requests that read nothing but data — the body carries a date range and a
+POST requests that read nothing but data - the body carries a date range and a
 filter tree, which is too much for a query string. They are marked retryable in
 the operation table for exactly that reason; nothing here mutates anything.
 

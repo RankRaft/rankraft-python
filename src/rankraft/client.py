@@ -1,7 +1,7 @@
 """The RankRaft AI client.
 
 Synchronous only in v1. ``httpx`` is here partly so an ``AsyncRankRaft`` can be
-added later without a rewrite — the retry decision, the envelope handling and
+added later without a rewrite - the retry decision, the envelope handling and
 the paginator are all transport-agnostic already.
 """
 
@@ -71,12 +71,12 @@ class RankRaft:
                 "rankraft: no API key. Pass api_key= or set RANKRAFT_API_KEY. "
                 "Create a key in the dashboard under Settings → API."
             )
-        # The prefix only — never the full shape, which a pinned client must
+        # The prefix only - never the full shape, which a pinned client must
         # not enforce. This catches the one mistake that is otherwise a
         # confusing 401: pasting a site key (rr_live_…) where an API key belongs.
         if not key.startswith(KEY_PREFIX):
             raise ConfigurationError(
-                f"rankraft: that is not an API key — API keys start with {KEY_PREFIX!r}. "
+                f"rankraft: that is not an API key - API keys start with {KEY_PREFIX!r}. "
                 "A site key (rr_live_…) is for sending traffic, not reading it."
             )
 
@@ -190,7 +190,7 @@ class RankRaft:
 
         ``serialize_with_cursor`` drops any cursor and appends the live one
         last, so every page's bytes are identical apart from one trailing
-        field — which is what the server's body-hash-bound cursor requires.
+        field - which is what the server's body-hash-bound cursor requires.
         """
         frozen = dict(base_body)
         initial = frozen.get("cursor") if isinstance(frozen.get("cursor"), str) else None

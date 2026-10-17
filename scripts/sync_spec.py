@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Vendor the published OpenAPI document into spec/openapi.json.
 
-The SDK never fetches this at runtime — it is a test fixture, and the
+The SDK never fetches this at runtime - it is a test fixture, and the
 conformance suite is the thing that reads it. Committing it means a PR diff
 shows the API surface change, and the daily spec-sync workflow turns a change
 nobody told us about into a pull request.

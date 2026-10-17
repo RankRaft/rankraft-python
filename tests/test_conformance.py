@@ -1,12 +1,12 @@
 """The SDK against the published contract.
 
 The only thing standing between a hand-written client and silent drift. It
-catches the failure mode that matters most — the API grows an endpoint and
+catches the failure mode that matters most - the API grows an endpoint and
 nobody here ever learns.
 
 ``spec/openapi.json`` is vendored by ``scripts/sync_spec.py`` and refreshed by
 a daily workflow that opens a PR on any change. Until the API Worker ships
-there is nothing to fetch, so this skips — loudly, never silently.
+there is nothing to fetch, so this skips - loudly, never silently.
 
 The Node SDK runs the same comparison against the same document, which is what
 keeps the two clients in step with each other without a cross-language test.

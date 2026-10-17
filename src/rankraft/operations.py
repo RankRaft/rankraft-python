@@ -52,7 +52,7 @@ OPERATIONS: dict[str, Operation] = {
     # Retryable because applying the same patch twice yields the same state.
     "update_prompts": Operation("PATCH", "/sites/{site_id}/prompts", True, False),
     "set_prompt_status": Operation("PATCH", "/sites/{site_id}/prompts/status", True, False),
-    # Reports — POST bodies, but pure reads
+    # Reports - POST bodies, but pure reads
     "report_visibility": Operation("POST", "/reports/visibility", True, True),
     "report_citations": Operation("POST", "/reports/citations", True, True),
     "report_sentiment": Operation("POST", "/reports/sentiment", True, True),

@@ -11,7 +11,7 @@ permissions:
 jobs:
   verify:
     # Re-run the whole of CI rather than trusting the commit's earlier green
-    # run — the tag may not point at what was tested.
+    # run - the tag may not point at what was tested.
     uses: ./.github/workflows/ci.yml
 
   publish:

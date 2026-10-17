@@ -1,6 +1,6 @@
 """One real call per endpoint against a staging Enterprise organization.
 
-The only check on behaviour the OpenAPI document cannot express — above all
+The only check on behaviour the OpenAPI document cannot express - above all
 whether the cursor really does survive a re-sent body, which is the single
 assumption this client cannot verify any other way. Run it before a release:
 

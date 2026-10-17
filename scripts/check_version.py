@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One version, three places, asserted to agree — and, with a tag argument, to
+"""One version, three places, asserted to agree - and, with a tag argument, to
 agree with the tag as well. Modelled on the WordPress plugin's check-version
 script in the main repo, for the same reason: the same fact in several files is
 only safe when something fails loudly when they diverge.

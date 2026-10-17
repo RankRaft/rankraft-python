@@ -94,7 +94,7 @@ def test_fetches_one_site_and_sends_the_actions_status_as_a_query(fake):
 
 
 def test_prompt_writes_return_the_whole_body(fake):
-    # `{dry_run, created, existing, data}` — unwrapping to `data` alone would
+    # `{dry_run, created, existing, data}` - unwrapping to `data` alone would
     # silently drop the counts the caller asked for.
     f = fake([Reply(200, {"dry_run": True, "created": 1, "existing": 0, "data": [{"text": "x", "status": "active"}]})])
     with f.client() as rr:
@@ -133,7 +133,7 @@ def test_a_datetime_is_reduced_to_its_utc_day(fake):
 
     f = fake([envelope([], {"next_cursor": None})])
     with f.client() as rr:
-        # 23:30 on the 1st in UTC+5 is 18:30 on the 1st in UTC — still the 1st.
+        # 23:30 on the 1st in UTC+5 is 18:30 on the 1st in UTC - still the 1st.
         rr.reports.sentiment(
             site_id="s1",
             start_date=datetime(2026, 9, 1, 23, 30, tzinfo=timezone(timedelta(hours=5))),

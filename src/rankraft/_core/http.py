@@ -170,7 +170,7 @@ def _json_or_none(text: str) -> Any:
 
 def _request_id(parsed: Any, headers: dict[str, str]) -> str | None:
     # The header fallback is not cosmetic: a Cloudflare-level 502, or a body
-    # rejected before the handler ran, returns no JSON at all — and that is
+    # rejected before the handler ran, returns no JSON at all - and that is
     # exactly when the id matters most.
     if isinstance(parsed, dict):
         value = parsed.get("request_id")

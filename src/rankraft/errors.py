@@ -60,7 +60,7 @@ class APIError(RankRaftError):
             )
             if part
         )
-        super().__init__(f"rankraft {status} {code} — {message}" + (f" ({suffix})" if suffix else ""))
+        super().__init__(f"rankraft {status} {code}: {message}" + (f" ({suffix})" if suffix else ""))
         self.status = status
         self.code = code
         self.details = details
@@ -85,7 +85,7 @@ class InvalidCursorError(BadRequestError):
 
 
 class AuthenticationError(APIError):
-    """401. Missing, unknown, revoked or expired — one indistinguishable answer."""
+    """401. Missing, unknown, revoked or expired - one indistinguishable answer."""
 
 
 class PlanRequiredError(APIError):
@@ -97,7 +97,7 @@ class PermissionDeniedError(APIError):
 
 
 class NotFoundError(APIError):
-    """404. No site with that id **in this organization** — the API will not
+    """404. No site with that id **in this organization** - the API will not
     confirm whether it exists elsewhere, so ids cannot be enumerated."""
 
 
@@ -166,7 +166,7 @@ ERROR_CODE_CLASSES: dict[str, type[APIError]] = {
     "site_not_set_up": ConflictError,
     "payload_too_large": PayloadTooLargeError,
     "unsupported_media_type": BadRequestError,
-    # 422 — all validation, one of them with structured details
+    # 422 - all validation, one of them with structured details
     "invalid_request": ValidationError,
     "invalid_filter": ValidationError,
     "invalid_date_range": ValidationError,
@@ -203,8 +203,8 @@ def error_from(
 ) -> APIError:
     cls = ERROR_CODE_CLASSES.get(code)
     if cls is None:
-        # 403 is ambiguous by status alone — plan_required and
-        # insufficient_permission share it — so the code above is what
+        # 403 is ambiguous by status alone - plan_required and
+        # insufficient_permission share it - so the code above is what
         # distinguishes them and this is only the fallback.
         cls = _STATUS_CLASSES.get(status, InternalServerError if status >= 500 else APIError)
     return cls(

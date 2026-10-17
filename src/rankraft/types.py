@@ -3,7 +3,7 @@
 
 ``total=False`` wherever the row shape is chosen at call time by ``group_by``
 and ``metrics``: a static type cannot know which columns a given call asked
-for. TypedDict rather than pydantic on purpose — pydantic as a runtime
+for. TypedDict rather than pydantic on purpose - pydantic as a runtime
 dependency on every Airflow worker is a real cost, and a second set of models
 is a second thing to keep in step with the API.
 """

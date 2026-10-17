@@ -1,6 +1,6 @@
 """The filter tree, and a small builder for it.
 
-Raw dicts are accepted everywhere a filter is — that is the escape hatch when
+Raw dicts are accepted everywhere a filter is - that is the escape hatch when
 the API grows an operator before this client does, and it is what an LLM
 driving an MCP server will produce. The builder exists for everyone else, and
 uses ``&``, ``|`` and ``~`` because data teams already read that fluently from
@@ -79,7 +79,7 @@ class _Group(Node):
         if not nodes:
             raise FilterGrammarError(f"{self.key}() needs at least one node")
         # Flatten same-kind children. `a & b & c` would otherwise nest three
-        # deep and hit the server's depth limit for no reason — and/or are
+        # deep and hit the server's depth limit for no reason - and/or are
         # associative, so flattening changes nothing but the shape.
         flat: list[Node] = []
         for node in nodes:

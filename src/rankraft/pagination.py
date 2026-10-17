@@ -28,7 +28,7 @@ TRow = TypeVar("TRow")
 
 # Which columns to_pandas() treats as dimensions and which as measures. The
 # API decides the row shape at call time, so this is a shape heuristic rather
-# than a schema — anything unlisted is left exactly as the API sent it.
+# than a schema - anything unlisted is left exactly as the API sent it.
 _DIMENSIONS = (
     "platform",
     "category",

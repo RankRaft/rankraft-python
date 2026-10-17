@@ -77,7 +77,7 @@ def pytest_report_header(config: pytest.Config) -> list[str]:
     """Say out loud what was not checked.
 
     A skipped conformance run means the SDK was not compared against the API
-    contract at all. That must never be quiet — the same bargain the main repo
+    contract at all. That must never be quiet - the same bargain the main repo
     strikes when php is missing and the plugin suite skips.
     """
     import os
