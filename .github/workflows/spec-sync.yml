@@ -1,0 +1,34 @@
+name: Spec sync
+
+# The cross-repo drift detector. In the API's own repo a changed route fails a
+# `git diff --exit-code` gate; from here the only way to learn is to look, so
+# this looks every day and opens a PR when the contract moves.
+on:
+  schedule:
+    - cron: "27 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python scripts/sync_spec.py
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: spec-sync
+          title: "chore: the API spec changed"
+          commit-message: "chore: sync spec/openapi.json"
+          body: |
+            `api.rankraft.ai/v1/openapi.json` no longer matches the vendored copy.
+
+            CI on this PR runs the conformance suite, which will fail if the SDK
+            does not model an endpoint the API now publishes. That failure is
+            the point of this workflow.
+          delete-branch: true

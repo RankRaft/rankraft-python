@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The floor and the ceiling. Everything between is the same code path.
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv python install ${{ matrix.python-version }}
+      - run: uv sync --all-extras --dev --python ${{ matrix.python-version }}
+      - run: uv run ruff check .
+      - run: uv run mypy
+      - run: uv run pytest
+
+  smoke:
+    # The live suite is the only check on semantics the spec cannot express.
+    # The secret is mapped to env at job level because the `secrets` context
+    # is not usable inside a step-level `if`.
+    runs-on: ubuntu-latest
+    env:
+      RANKRAFT_API_KEY: ${{ secrets.RANKRAFT_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --all-extras --dev
+      - name: Live smoke
+        if: env.RANKRAFT_API_KEY != ''
+        env:
+          RANKRAFT_LIVE: "1"
+        run: uv run pytest tests/test_live.py
+      - name: Say so when it was skipped
+        if: env.RANKRAFT_API_KEY == ''
+        run: echo "::warning::RANKRAFT_API_KEY is not set, so the live smoke suite did NOT run."

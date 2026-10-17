@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  id-token: write # PyPI trusted publishing; no long-lived token in this repo
+
+jobs:
+  verify:
+    # Re-run the whole of CI rather than trusting the commit's earlier green
+    # run — the tag may not point at what was tested.
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - id: version
+        run: echo "version=$(python scripts/check_version.py "${GITHUB_REF_NAME}")" >> "$GITHUB_OUTPUT"
+      - run: uv build
+      - name: Publish to PyPI
+        # Gated on a repository variable so this workflow can be merged and
+        # tagged before the PyPI project exists. Same reason the main repo's
+        # WordPress release is gated on WP_ORG_DEPLOY.
+        if: ${{ vars.PYPI_PUBLISH == 'true' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Say so when publishing was skipped
+        if: ${{ vars.PYPI_PUBLISH != 'true' }}
+        run: echo "::notice::PYPI_PUBLISH is not 'true', so v${{ steps.version.outputs.version }} was built but not published."
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: rankraft ${{ steps.version.outputs.version }}
+          files: dist/*
+          generate_release_notes: true
