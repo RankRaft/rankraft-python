@@ -13,6 +13,8 @@ jobs:
     # Re-run the whole of CI rather than trusting the commit's earlier green
     # run - the tag may not point at what was tested.
     uses: ./.github/workflows/ci.yml
+    # Without this the live smoke job gets no key and only warns.
+    secrets: inherit
 
   publish:
     needs: verify
@@ -22,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
       - id: version
-        run: echo "version=$(python scripts/check_version.py "${GITHUB_REF_NAME}")" >> "$GITHUB_OUTPUT"
+        run: echo "version=$(uv run python scripts/check_version.py "${GITHUB_REF_NAME}")" >> "$GITHUB_OUTPUT"
       - run: uv build
       - name: Publish to PyPI
         # Gated on a repository variable so this workflow can be merged and
