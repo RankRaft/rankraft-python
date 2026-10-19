@@ -17,8 +17,8 @@
 </p>
 
 ```bash
-pip install rankraft
-pip install 'rankraft[pandas]'   # adds .to_pandas()
+pip install rankraft-py
+pip install 'rankraft-py[pandas]'   # adds .to_pandas()
 ```
 
 The API is **Enterprise-only**. Create a key in the dashboard under
