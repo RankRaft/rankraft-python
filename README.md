@@ -1,8 +1,11 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/brand/rankraft-mark-dark-bg.svg">
-    <img src=".github/brand/rankraft-mark-light-bg.svg" alt="RankRaft AI" width="72" height="72">
-  </picture>
+  <!-- Absolute URL, not a relative repo path: GitHub rewrites relative image
+       paths against the repo when rendering this file, but PyPI's README
+       renderer does not, so a relative path 404s there. Same reason the MCP
+       server's icons and the auth email template use a hosted PNG instead of
+       the repo's SVG (see apps/api/src/mcp/handler.ts, apps/web/lib/auth/mailer.ts
+       in the main rankraft repo). -->
+  <img src="https://rankraft.ai/apple-icon.png" alt="RankRaft AI" width="72" height="72">
 </p>
 
 <h1 align="center">rankraft</h1>
