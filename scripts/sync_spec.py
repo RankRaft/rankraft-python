@@ -20,7 +20,12 @@ OUT = Path(__file__).resolve().parent.parent / "spec" / "openapi.json"
 
 
 def main() -> int:
-    request = urllib.request.Request(URL, headers={"accept": "application/json"})
+    # An explicit User-Agent is required, not decoration: Cloudflare answers
+    # urllib's default "Python-urllib/x.y" with a 403 (error 1010), which looks
+    # exactly like the endpoint being gone.
+    request = urllib.request.Request(
+        URL, headers={"accept": "application/json", "user-agent": "rankraft-spec-sync/1.0 (+https://github.com/RankRaft/rankraft-python)"}
+    )
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             spec = json.loads(response.read().decode())
@@ -33,7 +38,7 @@ def main() -> int:
         return 1
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(spec, indent=2) + "\n")
+    OUT.write_text(json.dumps(spec, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     version = (spec.get("info") or {}).get("version", "?")
     print(f"sync-spec: wrote {len(spec['paths'])} paths from {URL} (info.version={version})")
     return 0
