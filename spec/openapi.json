@@ -677,7 +677,7 @@
       "get": {
         "operationId": "listCompetitors",
         "summary": "List competitors",
-        "description": "Brands the site is compared against. `confirmed` competitors count in leaderboards and share of voice; unconfirmed ones were found in answers and are measured but not ranked until confirmed in the dashboard.",
+        "description": "Brands the site is compared against. `confirmed` competitors are ranked and get rows in reports; unconfirmed ones were found in answers and are measured, but not ranked until confirmed in the dashboard. Every competitor's mentions count in the share-of-voice total.",
         "tags": [
           "Discovery"
         ],
@@ -941,7 +941,7 @@
                             ]
                           },
                           "market": {
-                            "description": "Location appended to the question when it is asked, e.g. `Pakistan`. Null uses the site's market.",
+                            "description": "Location appended to the question when it is asked, e.g. `Pakistan`. Null asks the question with no location.",
                             "type": [
                               "string",
                               "null"
@@ -1048,7 +1048,7 @@
       "post": {
         "operationId": "createPrompts",
         "summary": "Create prompts",
-        "description": "Add up to 100 prompts. A prompt whose text already exists (ignoring case and spacing) is returned as it is rather than duplicated, so retrying is safe. Active prompts count against the plan's cap; a request that would exceed it is refused whole. `dry_run` validates and reports without writing.",
+        "description": "Add up to 100 prompts. A prompt whose text already exists (ignoring case and spacing) is returned as it is rather than duplicated, so retrying is safe. Enterprise has no prompt limit; a safety ceiling of 10,000 active prompts per site stops a runaway import, and a request that would pass it is refused whole. `dry_run` validates and reports without writing.",
         "tags": [
           "Prompts"
         ],
@@ -1106,7 +1106,8 @@
                             {
                               "type": "null"
                             }
-                          ]
+                          ],
+                          "description": "Location appended to the question when it is asked, e.g. `Lahore, Pakistan`. Null or omitted asks it with no location."
                         },
                         "active": {
                           "default": true,
@@ -1175,7 +1176,7 @@
                             ]
                           },
                           "market": {
-                            "description": "Location appended to the question when it is asked, e.g. `Pakistan`. Null uses the site's market.",
+                            "description": "Location appended to the question when it is asked, e.g. `Pakistan`. Null asks the question with no location.",
                             "type": [
                               "string",
                               "null"
@@ -1338,7 +1339,8 @@
                             {
                               "type": "null"
                             }
-                          ]
+                          ],
+                          "description": "Location appended to the question when it is asked, e.g. `Lahore, Pakistan`. Null or omitted asks it with no location."
                         }
                       },
                       "required": [
@@ -1403,7 +1405,7 @@
                             ]
                           },
                           "market": {
-                            "description": "Location appended to the question when it is asked, e.g. `Pakistan`. Null uses the site's market.",
+                            "description": "Location appended to the question when it is asked, e.g. `Pakistan`. Null asks the question with no location.",
                             "type": [
                               "string",
                               "null"
@@ -1513,7 +1515,7 @@
       "patch": {
         "operationId": "setPromptStatus",
         "summary": "Activate or disable prompts",
-        "description": "Switch prompts on or off. Disabled prompts stop being asked but keep their answer history. Activating counts against the plan's cap; a request that would exceed it is refused whole.",
+        "description": "Switch prompts on or off. Disabled prompts stop being asked but keep their answer history. Activating counts against the 10,000-prompt safety ceiling; a request that would pass it is refused whole.",
         "tags": [
           "Prompts"
         ],
@@ -2048,7 +2050,7 @@
                             ]
                           },
                           "share_of_voice": {
-                            "description": "0–1: the brand's share of all brand mentions (you plus confirmed competitors).",
+                            "description": "0–1: the brand's share of all brand mentions in these answers (you plus every tracked competitor, confirmed or not).",
                             "type": "number"
                           },
                           "answers": {
